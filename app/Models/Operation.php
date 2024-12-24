@@ -19,4 +19,14 @@ class Operation extends Model
     {
         return $this->belongsToMany(Employee::class, 'operation_employees')->withTimestamps();
     }
+
+    public function bus()
+    {
+        return $this->belongsTo(Bus::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }

@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bus extends Model
+class Notebook extends Model
 {
     use HasFactory;
+
 
     protected $guarded = [
         "id",
@@ -15,8 +16,9 @@ class Bus extends Model
         "updated_at"
     ];
 
-    public function operations()
+    public function recipes()
     {
-        return $this->hasMany(Operation::class);
+        return $this->hasMany(Recipe::class);
     }
+
 }

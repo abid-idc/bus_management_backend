@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class EmployeeController extends Controller
 {
@@ -38,7 +40,7 @@ class EmployeeController extends Controller
 
     public function readAll(Request $request) {
         try {
-            $data = Employee::with("specialty")->get();
+            $data = Employee::with("specialty", "operations", "controls")->get();
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -53,7 +55,7 @@ class EmployeeController extends Controller
 
     public function readById(Request $request) {
         try {
-            $object = Employee::with("specialty")->find($request->id);
+            $object = Employee::with("specialty", "operations", "controls")->find($request->id);
             return response()->json([
                 "success" => true,
                 "data" => $object
@@ -145,6 +147,69 @@ class EmployeeController extends Controller
                 "message" => $e->getMessage()
             ], 404);
         }
+    }
+
+    public function printEmployeesList(Request $request)
+    {
+        $employee_ids = $request->employee_ids;
+        $employees = Employee::query()
+            ->whereIn('id', $employee_ids)
+            ->with(['specialty', 'operations'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $company = Company::find(1);
+        $data = [
+            "employees" => $employees,
+            "company" => $company
+        ];
+        $pdf = PDF::loadView('reports.employees.list', $data);
+        return $pdf->stream('employees.pdf');
+    }
+
+    public function printEmployeeOperations(Request $request)
+    {
+        $employee_id = $request->employee_id;
+        $operations_start_date = $request->start_date;
+        $operations_end_date = $request->end_date;
+
+        $employee = Employee::with(['specialty', 'operations.bus', 'operations.type', 'operations' => function ($query) use ($operations_start_date, $operations_end_date) {
+            $query->whereBetween('operations.created_at', [$operations_start_date, $operations_end_date]);
+        }])
+            ->where('id', $employee_id)
+            ->first();
+
+        $company = Company::find(1);
+        $data = [
+            "employee" => $employee,
+            "company" => $company,
+            "start_date" => $operations_start_date,
+            "end_date" => $operations_end_date,
+        ];
+        $pdf = PDF::loadView('reports.employees.operations', $data);
+        return $pdf->stream('employee.pdf');
+    }
+
+    public function printEmployeeControls(Request $request)
+    {
+        $employee_id = $request->employee_id;
+        $controls_start_date = $request->start_date;
+        $controls_end_date = $request->end_date;
+
+        $employee = Employee::with(['specialty', 'controls.bus', 'controls.line', 'controls.line.depart', 'controls.line.arrival', 'controls' => function ($query) use ($controls_start_date, $controls_end_date) {
+            $query->whereBetween('controls.created_at', [$controls_start_date, $controls_end_date]);
+        }])
+            ->where('id', $employee_id)
+            ->first();
+
+        $company = Company::find(1);
+        $data = [
+            "employee" => $employee,
+            "company" => $company,
+            "start_date" => $controls_start_date,
+            "end_date" => $controls_end_date,
+        ];
+        $pdf = PDF::loadView('reports.employees.controls', $data);
+        return $pdf->stream('employee.pdf');
     }
 
 }

@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bus;
-use App\Models\Company;
+use App\Models\Notebook;
 use Illuminate\Http\Request;
-use PDF;
 
-class BusController extends Controller
+class NotebookController extends Controller
 {
-
     public function create(Request $request) {
         try {
             $data = $request->all();
-            Bus::create($data);
+            $notebook = Notebook::create($data);
             return response()->json([
                 "success" => true,
-                "message" => "opération a réussi"
+                "message" => "opération a réussi",
+                "data" => $notebook
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -28,7 +26,7 @@ class BusController extends Controller
 
     public function readAll(Request $request) {
         try {
-            $data = Bus::all();
+            $data = Notebook::with("recipes")->get();
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -43,7 +41,7 @@ class BusController extends Controller
 
     public function readById(Request $request) {
         try {
-            $object = Bus::find($request->id);
+            $object = Notebook::with("recipes")->find($request->id);
             return response()->json([
                 "success" => true,
                 "data" => $object
@@ -59,7 +57,7 @@ class BusController extends Controller
     public function update(Request $request)
     {
         try {
-            $object = Bus::find($request->id);
+            $object = Notebook::find($request->id);
             $data = $request->all();
             $object->update($data);
             return response()->json([
@@ -78,7 +76,7 @@ class BusController extends Controller
     public function delete(Request $request)
     {
         try {
-            $object = Bus::find($request->id);
+            $object = Notebook::find($request->id);
             if($object->delete()){
                 return response()->json([
                     "success" => true,
@@ -94,45 +92,4 @@ class BusController extends Controller
             ], 404);
         }
     }
-
-    public function printBusesList(Request $request)
-    {
-        $bus_ids = $request->bus_ids;
-        $buses = Bus::query()
-            ->whereIn('id', $bus_ids)
-            ->with(['operations'])
-            ->orderBy('created_at', 'desc')
-            ->get();
-        $company = Company::find(1);
-        $data = [
-            "buses" => $buses,
-            "company" => $company
-        ];
-        $pdf = PDF::loadView('reports.buses.list', $data);
-        return $pdf->stream('buses.pdf');
-    }
-
-    public function printBusOperations(Request $request)
-    {
-        $bus_id = $request->bus_id;
-        $operations_start_date = $request->start_date;
-        $operations_end_date = $request->end_date;
-
-        $bus = Bus::with(['operations.employees', 'operations.type', 'operations' => function ($query) use ($operations_start_date, $operations_end_date) {
-            $query->whereBetween('operations.created_at', [$operations_start_date, $operations_end_date]);
-        }])
-            ->where('id', $bus_id)
-            ->first();
-
-        $company = Company::find(1);
-        $data = [
-            "bus" => $bus,
-            "company" => $company,
-            "start_date" => $operations_start_date,
-            "end_date" => $operations_end_date,
-        ];
-        $pdf = PDF::loadView('reports.buses.operations', $data);
-        return $pdf->stream('bus.pdf');
-    }
-
 }

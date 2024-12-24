@@ -29,4 +29,9 @@ class Employee extends Authenticatable
     {
         return $this->belongsToMany(Operation::class, 'operation_employees')->withTimestamps();
     }
+
+    public function controls()
+    {
+        return $this->hasMany(Control::class);
+    }
 }
