@@ -41,6 +41,21 @@ class BusController extends Controller
         }
     }
 
+    public function paginatedReadAll(Request $request) {
+        try {
+            $data = Bus::paginate(10);
+            return response()->json([
+                "success" => true,
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
     public function readById(Request $request) {
         try {
             $object = Bus::find($request->id);

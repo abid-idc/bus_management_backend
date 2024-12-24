@@ -62,6 +62,21 @@ class RecipeController extends Controller
         }
     }
 
+    public function paginatedReadAll(Request $request) {
+        try {
+            $data = Recipe::with("bus", "employee", "notebook", "line")->paginate(10);
+            return response()->json([
+                "success" => true,
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
     public function readById(Request $request) {
         try {
             $object = Recipe::with("bus", "employee", "notebook", "line")->find($request->id);

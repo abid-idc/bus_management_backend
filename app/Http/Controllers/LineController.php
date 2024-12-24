@@ -38,6 +38,21 @@ class LineController extends Controller
         }
     }
 
+    public function paginatedReadAll(Request $request) {
+        try {
+            $data = Line::with("depart", "arrival")->paginate(10);
+            return response()->json([
+                "success" => true,
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
     public function readById(Request $request) {
         try {
             $object = Line::with("depart", "arrival")->find($request->id);

@@ -43,6 +43,21 @@ class OperationController extends Controller
         }
     }
 
+    public function paginatedReadAll(Request $request) {
+        try {
+            $data = Operation::with("employees")->paginate(10);
+            return response()->json([
+                "success" => true,
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
     public function readById(Request $request) {
         try {
             $object = Operation::with("employees")->find($request->id);

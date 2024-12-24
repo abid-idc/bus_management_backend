@@ -35,6 +35,7 @@ Route::group(['prefix' => 'specialties', 'middleware' => ['auth:sanctum']], func
     Route::put('/{id}', [SpecialtyController::class, 'update']);
     Route::delete('/{id}', [SpecialtyController::class, 'delete']);
     Route::get('/', [SpecialtyController::class, 'readAll']);
+    Route::get('/paginated/read-all', [SpecialtyController::class, 'paginatedReadAll']);
     Route::get('/{id}', [SpecialtyController::class, 'readById']);
 });
 
@@ -43,6 +44,7 @@ Route::group(['prefix' => 'types', 'middleware' => ['auth:sanctum']], function()
     Route::put('/{id}', [TypeController::class, 'update']);
     Route::delete('/{id}', [TypeController::class, 'delete']);
     Route::get('/', [TypeController::class, 'readAll']);
+    Route::get('/paginated/read-all', [TypeController::class, 'paginatedReadAll']);
     Route::get('/{id}', [TypeController::class, 'readById']);
 });
 
@@ -51,6 +53,7 @@ Route::group(['prefix' => 'cities', 'middleware' => ['auth:sanctum']], function(
     Route::put('/{id}', [CityController::class, 'update']);
     Route::delete('/{id}', [CityController::class, 'delete']);
     Route::get('/', [CityController::class, 'readAll']);
+    Route::get('/paginated/read-all', [CityController::class, 'paginatedReadAll']);
     Route::get('/{id}', [CityController::class, 'readById']);
 });
 
@@ -64,6 +67,7 @@ Route::group(['prefix' => 'employees', 'middleware' => ['auth:sanctum']], functi
     Route::put('/{id}', [EmployeeController::class, 'update']);
     Route::delete('/{id}', [EmployeeController::class, 'delete']);
     Route::get('/', [EmployeeController::class, 'readAll']);
+    Route::get('/paginated/read-all', [EmployeeController::class, 'paginatedReadAll']);
     Route::get('/{id}', [EmployeeController::class, 'readById']);
     Route::post('/print-employees-list', [EmployeeController::class, 'printEmployeesList']);
     Route::post('/print-employee-operations', [EmployeeController::class, 'printEmployeeOperations']);
@@ -79,6 +83,7 @@ Route::group(['prefix' => 'lines', 'middleware' => ['auth:sanctum']], function()
     Route::put('/{id}', [LineController::class, 'update']);
     Route::delete('/{id}', [LineController::class, 'delete']);
     Route::get('/', [LineController::class, 'readAll']);
+    Route::get('/paginated/read-all', [LineController::class, 'paginatedReadAll']);
     Route::get('/{id}', [LineController::class, 'readById']);
 });
 
@@ -87,6 +92,7 @@ Route::group(['prefix' => 'buses', 'middleware' => ['auth:sanctum']], function()
     Route::put('/{id}', [BusController::class, 'update']);
     Route::delete('/{id}', [BusController::class, 'delete']);
     Route::get('/', [BusController::class, 'readAll']);
+    Route::get('/paginated/read-all', [BusController::class, 'paginatedReadAll']);
     Route::get('/{id}', [BusController::class, 'readById']);
     Route::post('/print-buses-list', [BusController::class, 'printBusesList']);
     Route::post('/print-bus-operations', [BusController::class, 'printBusOperations']);
@@ -97,6 +103,7 @@ Route::group(['prefix' => 'operations', 'middleware' => ['auth:sanctum']], funct
     Route::put('/{id}', [OperationController::class, 'update']);
     Route::delete('/{id}', [OperationController::class, 'delete']);
     Route::get('/', [OperationController::class, 'readAll']);
+    Route::get('/paginated/read-all', [OperationController::class, 'paginatedReadAll']);
     Route::get('/{id}', [OperationController::class, 'readById']);
 });
 
@@ -105,6 +112,7 @@ Route::group(['prefix' => 'notebooks', 'middleware' => ['auth:sanctum']], functi
     Route::put('/{id}', [NotebookController::class, 'update']);
     Route::delete('/{id}', [NotebookController::class, 'delete']);
     Route::get('/', [NotebookController::class, 'readAll']);
+    Route::get('/paginated/read-all', [NotebookController::class, 'paginatedReadAll']);
     Route::get('/{id}', [NotebookController::class, 'readById']);
 });
 
@@ -114,6 +122,7 @@ Route::group(['prefix' => 'recipes', 'middleware' => ['auth:sanctum']], function
     Route::put('/{id}', [RecipeController::class, 'update']);
     Route::delete('/{id}', [RecipeController::class, 'delete']);
     Route::get('/', [RecipeController::class, 'readAll']);
+    Route::get('/paginated/read-all', [RecipeController::class, 'paginatedReadAll']);
     Route::get('/{id}', [RecipeController::class, 'readById']);
     Route::post('/print-recipe', [RecipeController::class, 'printRecipe']);
 });
@@ -123,6 +132,7 @@ Route::group(['prefix' => 'controls', 'middleware' => ['auth:sanctum']], functio
     Route::put('/{id}', [ControlController::class, 'update']);
     Route::delete('/{id}', [ControlController::class, 'delete']);
     Route::get('/', [ControlController::class, 'readAll']);
+    Route::get('/paginated/read-all', [ControlController::class, 'paginatedReadAll']);
     Route::get('/{id}', [ControlController::class, 'readById']);
 });
 

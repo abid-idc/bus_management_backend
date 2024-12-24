@@ -24,6 +24,21 @@ class NotebookController extends Controller
         }
     }
 
+    public function paginatedReadAll(Request $request) {
+        try {
+            $data = Notebook::with("recipes")->paginate(10);
+            return response()->json([
+                "success" => true,
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
     public function readAll(Request $request) {
         try {
             $data = Notebook::with("recipes")->get();
