@@ -71,6 +71,21 @@ class BusController extends Controller
         }
     }
 
+    public function readByQrCode(Request $request) {
+        try {
+            $object = Bus::where("qr_code", "=", $request->qrcode)->first();
+            return response()->json([
+                "success" => true,
+                "data" => $object
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
     public function update(Request $request)
     {
         try {

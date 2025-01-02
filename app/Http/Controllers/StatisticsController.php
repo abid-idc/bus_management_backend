@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\{Specialty, Type, City, Company, Employee, Line, Bus, Operation, Recipe, Control, Notebook};
+use App\Models\{Specialty, Type, City, Company, Employee, Line, Bus, Operation, Recipe};
 
 class StatisticsController extends Controller
 {
@@ -20,7 +20,6 @@ class StatisticsController extends Controller
             'buses_status' => Bus::select('status', DB::raw('count(*) as total'))->groupBy('status')->get(),
             'total_lines' => Line::count(),
             'total_operations' => Operation::count(),
-            'total_notebooks' => Notebook::count(),
             'total_recipes' => Recipe::count(),
         ]);
     }

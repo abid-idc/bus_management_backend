@@ -32,6 +32,11 @@ class Employee extends Authenticatable
 
     public function controls()
     {
-        return $this->hasMany(Control::class);
+        return $this->hasMany(Control::class, "controller_id");
+    }
+
+    public function accountants()
+    {
+        return $this->hasMany(Recipe::class, "accountant_id");
     }
 }

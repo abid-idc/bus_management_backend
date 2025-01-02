@@ -6,7 +6,6 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LineController;
-use App\Http\Controllers\NotebookController;
 use App\Http\Controllers\OperationController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SpecialtyController;
@@ -67,7 +66,10 @@ Route::group(['prefix' => 'employees', 'middleware' => ['auth:sanctum']], functi
     Route::put('/{id}', [EmployeeController::class, 'update']);
     Route::delete('/{id}', [EmployeeController::class, 'delete']);
     Route::get('/', [EmployeeController::class, 'readAll']);
+    Route::get('/read/all', [EmployeeController::class, 'readAllByRole']);
     Route::get('/paginated/read-all', [EmployeeController::class, 'paginatedReadAll']);
+    Route::get('/roles/read-all', [EmployeeController::class, 'readAllRoles']);
+    Route::get('/paginated/read-all-by-role', [EmployeeController::class, 'paginatedReadAllByRole']);
     Route::get('/{id}', [EmployeeController::class, 'readById']);
     Route::post('/print-employees-list', [EmployeeController::class, 'printEmployeesList']);
     Route::post('/print-employee-operations', [EmployeeController::class, 'printEmployeeOperations']);
@@ -94,6 +96,7 @@ Route::group(['prefix' => 'buses', 'middleware' => ['auth:sanctum']], function()
     Route::get('/', [BusController::class, 'readAll']);
     Route::get('/paginated/read-all', [BusController::class, 'paginatedReadAll']);
     Route::get('/{id}', [BusController::class, 'readById']);
+    Route::get('/qrcode/{qrcode}', [BusController::class, 'readByQrCode']);
     Route::post('/print-buses-list', [BusController::class, 'printBusesList']);
     Route::post('/print-bus-operations', [BusController::class, 'printBusOperations']);
 });
@@ -105,15 +108,6 @@ Route::group(['prefix' => 'operations', 'middleware' => ['auth:sanctum']], funct
     Route::get('/', [OperationController::class, 'readAll']);
     Route::get('/paginated/read-all', [OperationController::class, 'paginatedReadAll']);
     Route::get('/{id}', [OperationController::class, 'readById']);
-});
-
-Route::group(['prefix' => 'notebooks', 'middleware' => ['auth:sanctum']], function(){
-    Route::post('/', [NotebookController::class, 'create']);
-    Route::put('/{id}', [NotebookController::class, 'update']);
-    Route::delete('/{id}', [NotebookController::class, 'delete']);
-    Route::get('/', [NotebookController::class, 'readAll']);
-    Route::get('/paginated/read-all', [NotebookController::class, 'paginatedReadAll']);
-    Route::get('/{id}', [NotebookController::class, 'readById']);
 });
 
 Route::group(['prefix' => 'recipes', 'middleware' => ['auth:sanctum']], function(){

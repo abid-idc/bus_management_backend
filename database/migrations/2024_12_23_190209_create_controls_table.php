@@ -19,8 +19,14 @@ class CreateControlsTable extends Migration
             $table->unsignedBigInteger('bus_id')->nullable();
             $table->foreign('bus_id')->references('id')->on('buses')->cascadeOnDelete();
 
-            $table->unsignedBigInteger('employee_id')->nullable();
-            $table->foreign('employee_id')->references('id')->on('employees')->cascadeOnDelete();
+            $table->unsignedBigInteger('controller_id')->nullable();
+            $table->foreign('controller_id')->references('id')->on('employees')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('driver_id')->nullable();
+            $table->foreign('driver_id')->references('id')->on('employees')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->foreign('receiver_id')->references('id')->on('employees')->cascadeOnDelete();
 
             $table->unsignedBigInteger('line_id')->nullable();
             $table->foreign('line_id')->references('id')->on('lines')->cascadeOnDelete();

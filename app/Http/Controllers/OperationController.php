@@ -30,7 +30,7 @@ class OperationController extends Controller
 
     public function readAll(Request $request) {
         try {
-            $data = Operation::with("employees")->get();
+            $data = Operation::with("employees", "type", "bus")->get();
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -45,7 +45,7 @@ class OperationController extends Controller
 
     public function paginatedReadAll(Request $request) {
         try {
-            $data = Operation::with("employees")->paginate(10);
+            $data = Operation::with("employees", "type", "bus")->paginate(10);
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -60,7 +60,7 @@ class OperationController extends Controller
 
     public function readById(Request $request) {
         try {
-            $object = Operation::with("employees")->find($request->id);
+            $object = Operation::with("employees", "type", "bus")->find($request->id);
             return response()->json([
                 "success" => true,
                 "data" => $object

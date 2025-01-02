@@ -16,12 +16,10 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('notebook_id')->nullable();
-            $table->foreign('notebook_id')->references('id')->on('notebooks')->cascadeOnDelete();
-
             $table->double('amount')->nullable();
 
             $table->integer('current_index')->nullable();
+
             $table->integer('last_index')->nullable();
 
             $table->unsignedBigInteger('line_id')->nullable();
@@ -31,10 +29,17 @@ class CreateRecipesTable extends Migration
             $table->foreign('bus_id')->references('id')->on('buses')->cascadeOnDelete();
 
             $table->date('start_date')->nullable();
+
             $table->date('end_date')->nullable();
 
-            $table->unsignedBigInteger('employee_id')->nullable();
-            $table->foreign('employee_id')->references('id')->on('employees')->cascadeOnDelete();
+            $table->unsignedBigInteger('accountant_id')->nullable();
+            $table->foreign('accountant_id')->references('id')->on('employees')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('driver_id')->nullable();
+            $table->foreign('driver_id')->references('id')->on('employees')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->foreign('receiver_id')->references('id')->on('employees')->cascadeOnDelete();
 
             $table->string('observation')->nullable();
 

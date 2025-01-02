@@ -25,7 +25,7 @@ class ControlController extends Controller
 
     public function readAll(Request $request) {
         try {
-            $data = Control::with("bus", "employee", "line")->get();
+            $data = Control::with("bus", "driver", "controller", "receiver", "line")->get();
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -40,7 +40,7 @@ class ControlController extends Controller
 
     public function paginatedReadAll(Request $request) {
         try {
-            $data = Control::with("bus", "employee", "line")->paginate(10);
+            $data = Control::with("bus", "driver", "controller", "receiver", "line")->paginate(10);
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -55,7 +55,7 @@ class ControlController extends Controller
 
     public function readById(Request $request) {
         try {
-            $object = Control::with("bus", "employee", "line")->find($request->id);
+            $object = Control::with("bus", "driver", "controller", "receiver", "line")->find($request->id);
             return response()->json([
                 "success" => true,
                 "data" => $object

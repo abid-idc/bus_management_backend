@@ -107,7 +107,12 @@
                 <td>{{$employees[$i]->phone_number}}</td>
                 <td>{{$employees[$i]->recruitment_date}}</td>
                 <td>{{$employees[$i]->role}}</td>
-                <td>{{$employees[$i]->specialty->name}}</td>
+                @if($employees[$i]->specialty)
+                    <td>{{$employees[$i]->specialty->name}}</td>
+                @else
+                    <td>-</td>
+                @endif
+
             </tr>
         @endfor
     </tbody>

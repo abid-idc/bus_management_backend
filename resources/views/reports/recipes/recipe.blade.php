@@ -101,7 +101,8 @@
         </td>
         <td>
             <p class="normal-text"><b>Bus: </b> {{$bus->plate_number ?? '-'}}</p>
-            <p class="normal-text"><b>Receveur: </b> {{$employee->name ?? '-'}}</p>
+            <p class="normal-text"><b>Receveur: </b> {{$receiver->name ?? '-'}}</p>
+            <p class="normal-text"><b>Chauffeur: </b> {{$driver->name ?? '-'}}</p>
             <p class="normal-text"><b>Ligne: </b> {{$line->depart->name ?? "-" . " - " . $line->arrival->name ?? '-'}}</p>
         </td>
     </tr>

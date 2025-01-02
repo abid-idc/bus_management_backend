@@ -40,7 +40,24 @@ class EmployeeController extends Controller
 
     public function readAll(Request $request) {
         try {
-            $data = Employee::with("specialty", "operations", "controls")->get();
+            $data = Employee::with("specialty", "operations", "controls", "accountants")->get();
+            return response()->json([
+                "success" => true,
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => []
+            ], 404);
+        }
+    }
+
+    public function readAllByRole(Request $request) {
+        try {
+            $data = Employee::with("specialty", "operations", "controls", "accountants")
+                ->where("role", '=', $request->role)
+                ->get();
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -55,7 +72,7 @@ class EmployeeController extends Controller
 
     public function paginatedReadAll(Request $request) {
         try {
-            $data = Employee::with("specialty", "operations", "controls")->paginate(10);
+            $data = Employee::with("specialty", "operations", "controls", "accountants")->paginate(10);
             return response()->json([
                 "success" => true,
                 "data" => $data
@@ -68,10 +85,32 @@ class EmployeeController extends Controller
         }
     }
 
+    public function readAllRoles() {
+        return response()->json([
+            "success" => true,
+            "data" => [
+                'user', 'admin', 'consultant',
+                'driver', 'receiver', 'controller',
+                'accountant', 'workshop_responsible',
+                'intervener'
+            ]
+        ]);
+    }
+
+    public function paginatedReadAllByRole(Request $request) {
+        $data = Employee::with("specialty", "operations", "controls", "accountants")
+            ->where("role", '=', $request->role)
+            ->paginate(10);
+
+        return response()->json([
+            "success" => true,
+            "data" => $data
+        ]);
+    }
 
     public function readById(Request $request) {
         try {
-            $object = Employee::with("specialty", "operations", "controls")->find($request->id);
+            $object = Employee::with("specialty", "operations", "controls", "accountants")->find($request->id);
             return response()->json([
                 "success" => true,
                 "data" => $object

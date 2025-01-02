@@ -20,14 +20,19 @@ class Recipe extends Model
         return $this->belongsTo(Bus::class, 'bus_id');
     }
 
-    public function employee()
+    public function accountant()
     {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class, 'accountant_id');
     }
 
-    public function notebook()
+    public function driver()
     {
-        return $this->belongsTo(Notebook::class, 'notebook_id');
+        return $this->belongsTo(Employee::class, 'driver_id');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(Employee::class, 'receiver_id');
     }
 
     public function line()

@@ -20,9 +20,19 @@ class Control extends Model
         return $this->belongsTo(Bus::class, 'bus_id');
     }
 
-    public function employee()
+    public function controller()
     {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class, 'controller_id');
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(Employee::class, 'driver_id');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(Employee::class, 'receiver_id');
     }
 
     public function line()
