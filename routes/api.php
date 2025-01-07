@@ -116,7 +116,13 @@ Route::group(['prefix' => 'recipes', 'middleware' => ['auth:sanctum']], function
     Route::put('/{id}', [RecipeController::class, 'update']);
     Route::delete('/{id}', [RecipeController::class, 'delete']);
     Route::get('/', [RecipeController::class, 'readAll']);
+    Route::get('/filtered/read-all', [RecipeController::class, 'filteredReadAll']);
+    Route::get('/filtered/dynamic-search-read-all', [RecipeController::class, 'dynamicSearchWithoutPagination']);
+    Route::get('/filtered/read-all-by-date', [RecipeController::class, 'filteredReadAllByDate']);
     Route::get('/paginated/read-all', [RecipeController::class, 'paginatedReadAll']);
+    Route::get('/paginated/filtered-read-all', [RecipeController::class, 'filteredPaginatedReadAll']);
+    Route::get('/paginated/filtered-read-all-by-date', [RecipeController::class, 'filteredPaginatedReadAllByDate']);
+    Route::get('/paginated/dynamic-search', [RecipeController::class, 'dynamicSearchWithPagination']);
     Route::get('/{id}', [RecipeController::class, 'readById']);
     Route::post('/print-recipe', [RecipeController::class, 'printRecipe']);
 });
