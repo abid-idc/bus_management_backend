@@ -206,6 +206,7 @@ class EmployeeController extends Controller
 
     public function printEmployeesList(Request $request)
     {
+        header('Access-Control-Allow-Origin: *');
         $employee_ids = $request->employee_ids;
         $employees = Employee::query()
             ->whereIn('id', $employee_ids)
@@ -223,6 +224,7 @@ class EmployeeController extends Controller
 
     public function printEmployeeOperations(Request $request)
     {
+        header('Access-Control-Allow-Origin: *');
         $employee_id = $request->employee_id;
         $operations_start_date = $request->start_date;
         $operations_end_date = $request->end_date;
@@ -246,6 +248,7 @@ class EmployeeController extends Controller
 
     public function printEmployeeControls(Request $request)
     {
+        header('Access-Control-Allow-Origin: *');
         $employee_id = $request->employee_id;
         $controls_start_date = $request->start_date;
         $controls_end_date = $request->end_date;

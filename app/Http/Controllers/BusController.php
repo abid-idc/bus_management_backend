@@ -127,6 +127,7 @@ class BusController extends Controller
 
     public function printBusesList(Request $request)
     {
+        header('Access-Control-Allow-Origin: *');
         $bus_ids = $request->bus_ids;
         $buses = Bus::query()
             ->whereIn('id', $bus_ids)
@@ -144,6 +145,7 @@ class BusController extends Controller
 
     public function printBusOperations(Request $request)
     {
+        header('Access-Control-Allow-Origin: *');
         $bus_id = $request->bus_id;
         $operations_start_date = $request->start_date;
         $operations_end_date = $request->end_date;
